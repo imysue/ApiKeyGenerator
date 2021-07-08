@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Welcome to ApiKeySystem</title>
+
+</head>
+
+<body>
+	<h2 th:text"${result}"></h2>
+	<div class="container">
+		main
+	</div>
+	<h2 th:text"/key"></h2>
+	<form action="#" th:action="@{/registerKeyInfo}" method="POST" contentType="application/json" >
+	<p> key: <input type="input" name="key" /></p>
+	<p> description: <input type="input" name="description" /></p>
+	<p> type: <input type="input" name="type" /></p>
+	<p> generator: <input type="input" name="generator" /></p>
+	<p> minLength: <input type="input" name="minLength" /></p>
+	<input type="submit" value="submit" >registerKeyInfo</input>
+	</form>
+	<form action="#" th:action="@{/generateKey}" method="POST" contentType="application/json" >
+	<p> key: <input type="input" name="key" /></p>
+	<p> userName: <input type="input" name="userName" /></p>
+	<input type="submit" value="submit" >generateKey</input>
+	</form>
+	</body>
+
+</html>

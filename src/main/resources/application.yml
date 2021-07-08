@@ -1,0 +1,57 @@
+server:
+  compression:
+    enabled: true
+  port: 8099  
+  session:
+    timeout: 30
+    
+logging.level:
+  org.hibernate: DEBUG
+  org.springframework:
+    boot: DEBUG
+    web : DEBUG
+    security : DEBUG
+  application:
+    name: DEBUG
+  
+spring:  
+  h2: 
+    console: 
+      path: /h2
+      enabled: true
+      
+  datasource:
+    url: jdbc:h2:~/test
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+
+  # devtools 설정
+  devtools:
+    livereload:
+      enabled: true
+  freemarker:
+    cache: false
+  jpa: 
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate: 
+      ddl-auto: update
+      show-sql: true
+    properties: 
+      hibernate: 
+        format_sql: true
+  servlet:
+    multipart:
+      maxFileSize: 100MB
+      maxRequestSize: 100MB
+  thymeleaf:
+    cache: false
+    check-template: true
+    check-template-location: true
+    enabled: true
+    encoding: UTF-8
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, prometheus
