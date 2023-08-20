@@ -17,7 +17,7 @@ import com.keyGenerator.service.KeyGeneratorService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4
+@Slf4j
 @RestController
 @RequestMapping("/key")
 public class KeyGeneratorRestController {
