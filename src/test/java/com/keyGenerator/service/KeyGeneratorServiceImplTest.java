@@ -2,6 +2,7 @@ package com.keyGenerator.service;
 
 import com.keyGenerator.dto.KeyInfoParam;
 import com.keyGenerator.entity.KeyInfo;
+import com.keyGenerator.exception.CustomException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,8 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -38,10 +38,10 @@ public class KeyGeneratorServiceImplTest {
 
         //정상 등록 여부
         KeyInfoParam keyInfoParam = KeyInfoParam.builder()
-                .key("policy-number1")
+                .key("policy-number2")
                 .type("string")
                 .generator("GenericKeyGenerator")
-                .description("test1")
+                .description("test2")
                 .minLength(5)
                 .build();
 
@@ -49,12 +49,30 @@ public class KeyGeneratorServiceImplTest {
 
         System.out.println("KeyInfoId : " + returnKeyInfo.getKeyInfoId());
 
-        Assert.assertNotNull(returnKeyInfo.getKeyInfoId());
-//        assertThat(returnKeyInfo.getKeyInfoId(), is(notNullValue()));
+//        Assert.assertNotNull(returnKeyInfo.getKeyInfoId());
+        assertThat(returnKeyInfo.getKeyInfoId(), is(notNullValue()));
     }
 
     @Test
     @DisplayName("중복키")
     public void duplicateKey() {
+        /* GIVEN */
+        KeyInfoParam keyInfoParam = KeyInfoParam.builder()
+                .key("policy-number2")
+                .type("string")
+                .generator("GenericKeyGenerator")
+                .description("test2")
+                .minLength(5)
+                .build();
+
+        /* THEN -> EXPECTED EXCEPTION */
+        Exception exception = assertThrows(CustomException.class, () -> {
+            /* WHEN */
+            KeyInfoParam returnKeyInfo = keyGeneratorService.registerKeyInfo(keyInfoParam);
+        });
+
+        /* THEN -> EXPECTED EXCEPTION MESSAGE */
+        assertThat(exception.getMessage(), containsString("존재하는 ID 입니다."));
+
     }
 }
